@@ -1759,8 +1759,8 @@ struct NDArray[dtype: DType = DType.float32](
     # fn round(self):
     #     pass
 
-    fn sort(self) raises -> Self:
-        return numojo.core.sort.quick_sort(self)
+    # fn sort(self) raises -> Self:
+    #     return numojo.core.sort.quick_sort(self)
 
     fn sum(self: Self, axis: Int) raises -> Self:
         """

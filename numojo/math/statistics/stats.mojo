@@ -7,6 +7,7 @@
 # from numojo.core.NDArray import NDArray
 from ...core.ndarray import NDArray
 from .. import mul
+from math import sqrt
 
 fn sum(array: NDArray, axis: Int = 0) raises -> NDArray[array.dtype]:
     """
@@ -202,3 +203,26 @@ fn min[dtype:DType](array:NDArray[dtype], axis: Int = 0)raises-> NDArray[dtype]:
         result = add(result * bool_to_numeric[dtype](mask2),arr_slice * bool_to_numeric[dtype](mask1))
 
     return result
+
+fn std[dtype:DType](array: NDArray[dtype], axis: Int = 0) raises -> Float64:
+    """
+    Standart Deviation of elements over a give axis.
+    Args:
+        array: NDArray.
+        axis: The axis along which the Standart Deviation to be determined.
+    Returns:
+        Standart Deviation as Float64 of a given NDArray along given axis.
+    """
+    if axis > array.ndim - 1:
+        raise Error("axis cannot be greater than the rank of the array")
+        
+    if array[axis].__len__() != 0:
+        raise Error("Cannot find Standart Deviation of an empty array")
+
+    var result: Float64 = 0
+    var mu: Float64 = mean(array = array, axis = axis)[0]
+
+    for i in range(array.ndshape._size):
+        result = result + pow((array[axis][i] - mu), 2)
+        
+    return sqrt(result / array.ndshape._size)
